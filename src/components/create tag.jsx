@@ -53,7 +53,7 @@ function CreateTag({ fetchTasks }) {
     try {
       // Enviar una solicitud para crear la tarjeta en el backend usando axios
       const response = await axios.post(
-        'http://127.0.0.1:8000/tag/create', 
+        `${apiUrl}/tag/create`, 
         {
           user_id: userId,
           day: selectedDay,
