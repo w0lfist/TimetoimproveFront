@@ -39,7 +39,7 @@ function SingIn() {
         }
 
         try {
-            const res = await axios.post(`${apiUrl}/api/users`, {
+            const res = await axios.post("http://127.0.0.1:8000/api/users", {
                 name,
                 last_name,
                 user_name,
@@ -54,10 +54,13 @@ function SingIn() {
             console.log(res);
             e.target.reset();
             setAcceptTerms(false);
-            navigate("/");
+            navigate("/"); // Redirige a la ruta raíz después del registro exitoso
         } catch (error) {
-            console.error("Error al registrar:", error);
-            alert("Hubo un error en el registro. Inténtalo de nuevo.");
+            if (error.response && error.response.data) {
+                setError(error.response.data.detail); // Muestra el error del backend
+            } else {
+                setError("Error al registrarse");
+            }
         }
     };
 
@@ -163,6 +166,11 @@ function SingIn() {
 
                     <input type="submit" value="Registrar" className="submit-button"/>
                 </form>
+                <div>
+            
+            
+            {error && <p style={{ color: "red" }}>{error}</p>} {/* Muestra el mensaje de error */}
+        </div>
             </div>
             <Footer />
         </div>          
