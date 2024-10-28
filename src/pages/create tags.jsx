@@ -9,9 +9,9 @@ import advancedImage from '../../public/multimedia/images/routines/advance/advan
 import "./styles/createtags.css"
 
 function CreateTags() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [selectedDay, setSelectedDay] = useState(''); // Día seleccionado
   const [routine, setRoutine] = useState(null); // Rutina seleccionada automáticamente
-  const [createdTags, setCreatedTags] = useState([]); // Para guardar las tarjetas ya creadas
   const [error, setError] = useState(null); // Para manejar errores
   const [successMessage, setSuccessMessage] = useState(null); // Para manejar mensajes de éxito
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function CreateTags() {
       }
 
       // Verifica el estado de first_login
-      const response = await fetch('http://127.0.0.1:8000/check-user-status', {
+      const response = await fetch(`${apiUrl}/check-user-status`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ function CreateTags() {
 
   const handleRoutineSelection = async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://127.0.0.1:8000/assign-routine', {
+    const response = await fetch(`${apiUrl}/assign-routine`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ function CreateTags() {
     try {
       // Enviar una solicitud para crear la tarjeta en el backend usando axios
       const response = await axios.post(
-        'http://127.0.0.1:8000/tag/create', 
+        `${apiUrl}/tag/create`, 
         {
           user_id: userId,
           day: selectedDay,  // Tomamos el día seleccionado
@@ -148,7 +148,7 @@ function CreateTags() {
   
     // Primero, verificar si el usuario ha creado alguna tarjeta
     try {
-      const tagsResponse = await axios.get(`http://127.0.0.1:8000/api/tags/user/${userId}`, {
+      const tagsResponse = await axios.get(`${apiUrl}/api/tags/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -156,7 +156,7 @@ function CreateTags() {
   
       // Si se encuentran tarjetas, permitir que continúe el proceso
       if (tagsResponse.data && tagsResponse.data.length > 0) {
-        const updateResponse = await fetch(`http://127.0.0.1:8000/api/users/${userId}/first_login`, {
+        const updateResponse = await fetch(`${apiUrl}/api/users/${userId}/first_login`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

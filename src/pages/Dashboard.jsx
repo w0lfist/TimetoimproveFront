@@ -11,6 +11,7 @@ import adviceList from "../components/lists";
 import CreateTag from "../components/create tag";
 
 function Dashboard() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("token");
   const [userName, setUserName] = useState("");
   const [tasks, setTasks] = useState([]);
@@ -33,7 +34,7 @@ function Dashboard() {
   const fetchTasks = async () => {
     const userId = localStorage.getItem("user_id");
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/tags/user/${userId}`);
+      const res = await axios.get(`${apiUrl}/api/tags/user/${userId}`);
       setTasks(res.data.map(task => ({ ...task, id: task._id })));
     } catch (error) {
       console.error("Error al obtener las tarjetas:", error);
@@ -55,7 +56,7 @@ function Dashboard() {
   const resetTasks = async () => {
     const userId = localStorage.getItem("user_id");
     try {
-      await axios.put(`http://127.0.0.1:8000/api/tags/reset/user/${userId}`);
+      await axios.put(`${apiUrl}/api/tags/reset/user/${userId}`);
       fetchTasks();
     } catch (error) {
       console.error("Error al reiniciar las tarjetas:", error);
@@ -65,7 +66,7 @@ function Dashboard() {
   const eliminateTasks = async () => {
     const userId = localStorage.getItem("user_id");
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/tags/eliminate/user/${userId}`);
+      await axios.delete(`${apiUrl}/api/tags/eliminate/user/${userId}`);
       // Refresca la página después de eliminar las tarjetas
       window.location.reload(); // Recarga la página
     } catch (error) {

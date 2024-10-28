@@ -7,6 +7,7 @@ import Footer from "../components/footer";
 import exerciseList from "../components/exercisesList";
 
 function BegginerFbRoutine() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [routine, setRoutine] = useState({});
@@ -28,7 +29,7 @@ function BegginerFbRoutine() {
     async function fetchRoutine() {
       try {
         const res = await axios.get(
-          `http://127.0.0.1:8000/api/routines/Begginer/user/${userId}`
+          `${apiUrl}/api/routines/Begginer/user/${userId}`
         );
         setRoutine(res.data);
         initializeTimers(res.data.exercises);
@@ -49,7 +50,7 @@ function BegginerFbRoutine() {
     }
 
     try {
-      await axios.put(`http://localhost:8000/api/tag/user/${taskId}`, {
+      await axios.put(`${apiUrl}/api/tag/user/${taskId}`, {
         state: "Completada",
       });
       console.log(`Estado de la tarea actualizado a "Completada"`);

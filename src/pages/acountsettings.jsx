@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/header';
 import "./styles/accountsetings.css"
 
+
 const AccountSettings = () => {
+    const apiUrl = import.meta.env.VITE_API_URL;
     const [activeSection, setActiveSection] = useState('usuario');
     const [userData, setUserData] = useState({
         name: '',
@@ -31,7 +33,7 @@ const AccountSettings = () => {
 
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/users/${userId}`, {
+                const response = await axios.get(`${apiUrl}/api/users/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -59,14 +61,14 @@ const AccountSettings = () => {
         const userId = localStorage.getItem('user_id');
 
         try {
-            await axios.put(`http://127.0.0.1:8000/api/users/${userId}`, userData, {
+            await axios.put(`${apiUrl}/api/users/${userId}`, userData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             });
             setMessage('Datos actualizados correctamente.');
-            const response = await axios.get(`http://127.0.0.1:8000/api/users/${userId}`, {
+            const response = await axios.get(`${apiUrl}/api/users/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -86,7 +88,7 @@ const AccountSettings = () => {
         const currentPassword = prompt("Por favor ingresa tu contraseña actual:");
 
         try {
-            await axios.put(`http://127.0.0.1:8000/api/users/${userId}/password`, {
+            await axios.put(`${apiUrl}/api/users/${userId}/password`, {
                 current_password: currentPassword,
                 new_password: newPassword
             }, {
@@ -107,7 +109,7 @@ const AccountSettings = () => {
         const token = localStorage.getItem('token');
 
         try {
-            await axios.post(`http://127.0.0.1:8000/assign-routine`, {}, {
+            await axios.post(`${apiUrl}/assign-routine`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -127,7 +129,7 @@ const AccountSettings = () => {
             const userId = localStorage.getItem('user_id');
 
             try {
-                await axios.delete(`http://127.0.0.1:8000/api/delete/user/${userId}`, {
+                await axios.delete(`${apiUrl}/api/delete/user/${userId}`, {
                     data: { current_password: currentPassword },
                     headers: {
                         Authorization: `Bearer ${token}`,

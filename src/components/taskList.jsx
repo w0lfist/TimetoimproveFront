@@ -8,7 +8,7 @@ import advancedImage from '/multimedia/images/routines/advance/advanced.jpg';
 
 function TaskList({ tasks, fetchTasks }) {
     const navigate = useNavigate();
-
+    const apiUrl = import.meta.env.VITE_API_URL;
     const imageRoutineList = {
         "cuerpo completo principiante": beginnerImage,
         "cuerpo completo intermedio": intermediateImage,
@@ -56,7 +56,7 @@ function TaskList({ tasks, fetchTasks }) {
         localStorage.setItem("current_task_id", task.id);
 
         try {
-            await axios.put(`http://localhost:8000/api/tag/user/${task.id}`, {
+            await axios.put(`${apiUrl}/api/tag/user/${task.id}`, {
                 state: "Incompleta",
             });
             console.log(`Estado de la tarea "${task.day}" actualizado a "Incompleta"`);
@@ -69,7 +69,7 @@ function TaskList({ tasks, fetchTasks }) {
 
     const handleDeleteClick = async (taskId) => {
         try {
-            await axios.delete(`http://localhost:8000/api/delete/tag/user/${taskId}`);
+            await axios.delete(`${apiUrl}/api/delete/tag/user/${taskId}`);
             console.log(`Tarjeta con ID ${taskId} eliminada`);
             await fetchTasks();  // Llama a fetchTasks para refrescar la lista
         } catch (error) {

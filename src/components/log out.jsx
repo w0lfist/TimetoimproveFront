@@ -7,6 +7,7 @@ const LogoutButton = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/'); // O a la ruta raíz '/'
+    window.location.reload();
   };
 
   return (

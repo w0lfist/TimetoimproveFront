@@ -7,6 +7,7 @@ import Footer from "../components/footer";
 import "./styles/singin.css"
 
 function SingIn() {
+    const apiUrl = import.meta.env.VITE_API_URL;
     const [name, setName] = useState("");
     const [last_name, setLastName] = useState("");
     const [user_name, setUserName] = useState("");
@@ -38,7 +39,7 @@ function SingIn() {
         }
 
         try {
-            const res = await axios.post("http://127.0.0.1:8000/api/users", {
+            const res = await axios.post(`${apiUrl}/api/users`, {
                 name,
                 last_name,
                 user_name,

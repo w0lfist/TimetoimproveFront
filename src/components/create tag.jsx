@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios'; // Importar axios
 
 function CreateTag({ fetchTasks }) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [selectedDay, setSelectedDay] = useState(''); // Día seleccionado
   const [routine, setRoutine] = useState(null); // Rutina seleccionada automáticamente
   const [error, setError] = useState(null); // Para manejar errores
   const [successMessage, setSuccessMessage] = useState(null); // Para manejar mensajes de éxito
-  const navigate = useNavigate();
 
   const handleDaySelection = (day) => {
     setSelectedDay(day);  // Actualiza el día seleccionado
@@ -19,7 +19,7 @@ function CreateTag({ fetchTasks }) {
     const userId = localStorage.getItem('user_id'); // Asegurarse de obtener el userId aquí
 
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/routines/user/${userId}`, {
+      const response = await axios.get(`${apiUrl}/api/routines/user/${userId}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

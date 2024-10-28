@@ -4,6 +4,7 @@ import LogoutButton from './log out';
 import "./styles/header.css"
 
 const Header = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const userName = localStorage.getItem('user_name');
