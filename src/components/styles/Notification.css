@@ -1,0 +1,24 @@
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    z-index: 1000; /* Asegúrate de que las notificaciones se muestren sobre otros elementos */
+    transition: opacity 0.5s ease-in-out;
+}
+
+.notification.success {
+    background-color: #1ab7bc; /* Color para mensajes de éxito */
+}
+
+.notification.error {
+    background-color: #ff3860; /* Color para mensajes de error */
+}
+
+.notification.warning {
+    background-color: #ffdd57; /* Color para mensajes de advertencia */
+}
+
+/* Puedes agregar más estilos para hacer que la tarjeta sea más atractiva */
